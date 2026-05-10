@@ -1,34 +1,10 @@
-import "./CreateEventModal.css";
+import { Modal } from '../Modal/Modal';
 
 export function CreateEventModal({ closeModal, onSubmit, children }) {
   return (
-    <div
-      className="modal-container"
-      onClick={(e) => {
-        if (e.target.className === "modal-container")
-          closeModal("Modal was closed");
-      }}
-    >
-      <div className="modal">
-        <div className="modal-header">
-          <button
-            className="close"
-            onClick={() => closeModal("Modal was closed")}
-          >
-            &times;
-          </button>
-        </div>
-        <div className="modal-content">{children}</div>
-        <div className="modal-footer">
-          <button
-            type="submit"
-            className="btn-submit"
-            onClick={() => onSubmit("Submit button was clicked")}
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-    </div>
+    <Modal closeModal={closeModal} onSubmit={onSubmit}>
+      <h1 className="modal-title">Create new event</h1>
+      {children}
+    </Modal>
   );
 }
