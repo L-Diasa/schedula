@@ -1,6 +1,6 @@
 import "./CreateEventModal.css";
 
-export function CreateEventModal({ closeModal, children }) {
+export function CreateEventModal({ closeModal, onSubmit, children }) {
   return (
     <div
       className="modal-container"
@@ -19,6 +19,15 @@ export function CreateEventModal({ closeModal, children }) {
           </button>
         </div>
         <div className="modal-content">{children}</div>
+        <div className="modal-footer">
+          <button
+            type="submit"
+            className="btn-submit"
+            onClick={() => onSubmit("Submit button was clicked")}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
