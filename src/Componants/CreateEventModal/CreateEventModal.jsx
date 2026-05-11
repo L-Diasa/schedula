@@ -17,6 +17,16 @@ export function CreateEventModal({ closeModal, onSubmit }) {
         </div>
 
         <div className="form-group">
+          <label htmlFor="group">Group</label>
+          <select id="group">
+            <option value="">Select a group</option>
+            <option value="friends">Friends</option>
+            <option value="family">Family</option>
+            <option value="work">Work</option>
+          </select>
+        </div>
+
+        <div className="form-group">
           <label htmlFor="date">Date</label>
           <input id="date" type="date" />
         </div>
@@ -34,6 +44,15 @@ export function CreateEventModal({ closeModal, onSubmit }) {
             placeholder="EURECOM"
           />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea
+            id="description"
+            placeholder="A short description of the event"
+          />
+        </div>
+
       </form>
     </Modal>
   );
