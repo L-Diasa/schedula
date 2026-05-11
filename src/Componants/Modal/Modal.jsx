@@ -1,6 +1,6 @@
 import "./Modal.css";
 
-export function Modal({ closeModal, children }) {
+export function Modal({ closeModal, title, children }) {
   return (
     <div
       className="modal-container"
@@ -18,7 +18,10 @@ export function Modal({ closeModal, children }) {
             &times;
           </button>
         </div>
-        <div className="modal-content">{children}</div>
+        <div className="modal-content">
+          <h1 className="modal-title">{title}</h1>
+          {children}
+        </div>
       </div>
     </div>
   );
