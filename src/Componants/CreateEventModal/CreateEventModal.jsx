@@ -1,19 +1,21 @@
 import "./CreateEventModal.css";
-import { Modal } from '../Modal/Modal';
+import { Modal } from "../Modal/Modal";
 
 export function CreateEventModal({ closeModal, onSubmit }) {
   return (
-    <Modal closeModal={closeModal} onSubmit={onSubmit}>
+    <Modal closeModal={closeModal}>
       <h1 className="modal-title">Create new event</h1>
 
-      <form className="event-form">
+      <form
+        className="event-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit();
+        }}
+      >
         <div className="form-group">
           <label htmlFor="title">Event title</label>
-          <input
-            id="title"
-            type="text"
-            placeholder="Birthday party"
-          />
+          <input id="title" type="text" placeholder="Birthday party" />
         </div>
 
         <div className="form-group">
@@ -38,11 +40,7 @@ export function CreateEventModal({ closeModal, onSubmit }) {
 
         <div className="form-group">
           <label htmlFor="location">Location</label>
-          <input
-            id="location"
-            type="text"
-            placeholder="EURECOM"
-          />
+          <input id="location" type="text" placeholder="EURECOM" />
         </div>
 
         <div className="form-group">
@@ -53,6 +51,11 @@ export function CreateEventModal({ closeModal, onSubmit }) {
           />
         </div>
 
+        <div className="modal-footer">
+          <button type="submit" className="btn-submit">
+            Submit
+          </button>
+        </div>
       </form>
     </Modal>
   );

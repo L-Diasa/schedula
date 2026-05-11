@@ -24,3 +24,12 @@
   border-radius: 8px;
   border: 1px solid #ccc;
 }
+
+.btn-submit {
+  background-color: rgb(237, 122, 122);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
