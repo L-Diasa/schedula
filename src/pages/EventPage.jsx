@@ -1,4 +1,6 @@
 import "./eventPage.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 export default function EventPage() {
    const participants = [
@@ -94,9 +96,21 @@ export default function EventPage() {
             </p>
           </div>
 
-          <div className="map-placeholder">
-            MAP
-          </div>
+          <MapContainer
+              center={[43.6156, 7.0718]}
+              zoom={15}
+              scrollWheelZoom={true}
+              className="map-container"
+              >
+              <TileLayer
+                attribution='&copy; OpenStreetMap contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+              <Marker position={[43.6156, 7.0718]}>
+                <Popup>Campus SophiaTech</Popup>
+              </Marker>
+          </MapContainer>
 
         </aside>
 
