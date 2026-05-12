@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/json-server/schema.json",
+  "events": [
+    {
+      "id": "1",
+      "title": "Event 1",
+      "group": "Group A",
+      "date": "01-07-2024",
+      "time": "10:00",
+      "location": "Location A",
+      "description": "Description for Event 1"
+    },
+    {
+      "id": "2",
+      "title": "Event 2",
+      "group": "Group B",
+      "date": "02-07-2024",
+      "time": "14:00",
+      "location": "Location B",
+      "description": "Description for Event 2"
+    }
+  ]
+}
