@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import "./App.css";
-import { CreateEventModal } from "./componants/CreateEventModal/CreateEventModal";
-import { Modal } from "./componants/Modal/Modal";
+import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
+import { Modal } from "./components/Modal/Modal";
+import { createEvent } from "./api/events";
 
 function App() {
   const [CreateEventModalOpen, setCreateEventModalOpen] = useState(false);
@@ -11,6 +12,18 @@ function App() {
   const handleButtonClick = () => {
     setCreateEventModalOpen(false);
     setModalOpen(false);
+  };
+
+  const handleCreateEvent = async (newEvent) => {
+    try {
+      const savedEvent = await createEvent(newEvent);
+
+      console.log(savedEvent);
+
+      setCreateEventModalOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -22,8 +35,8 @@ function App() {
         {CreateEventModalOpen &&
           createPortal(
             <CreateEventModal
-              closeModal={handleButtonClick}
-              onSubmit={handleButtonClick}
+              closeModal={() => setCreateEventModalOpen(false)}
+              onSubmit={handleCreateEvent}
             />,
             document.body,
           )}
