@@ -4,10 +4,17 @@ import "./App.css";
 import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
 import { Modal } from "./components/Modal/Modal";
 import { createEvent } from "./api/events";
+import { useFetch } from "./utils/hooks/useFetch";
 
 function App() {
   const [CreateEventModalOpen, setCreateEventModalOpen] = useState(false);
   const [ModalOpen, setModalOpen] = useState(false);
+
+  const {
+    data: events,
+    isPending,
+    error,
+  } = useFetch("http://localhost:3000/events");
 
   const handleButtonClick = () => {
     setCreateEventModalOpen(false);
@@ -25,6 +32,8 @@ function App() {
       console.error(err);
     }
   };
+
+  const firstEvent = events?.[0];
 
   return (
     <>
@@ -51,6 +60,45 @@ function App() {
             document.body,
           )}
       </div>
+      <section className="events-section">
+        <h2>First Event</h2>
+
+        {isPending && <p>Loading...</p>}
+
+        {error && <p>{error}</p>}
+
+        {firstEvent && (
+          <div className="event-card">
+            <p>
+              <strong>Title:</strong> {firstEvent.title}
+            </p>
+
+            <p>
+              <strong>Group:</strong> {firstEvent.group}
+            </p>
+
+            <p>
+              <strong>Date:</strong> {firstEvent.date}
+            </p>
+
+            <p>
+              <strong>Time:</strong> {firstEvent.time}
+            </p>
+
+            <p>
+              <strong>Location:</strong> {firstEvent.location}
+            </p>
+
+            <p>
+              <strong>Description:</strong> {firstEvent.description}
+            </p>
+
+            <p>
+              <strong>ID:</strong> {firstEvent.id}
+            </p>
+          </div>
+        )}
+      </section>
     </>
   );
 }
