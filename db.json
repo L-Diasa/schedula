@@ -1,23 +1,56 @@
 {
-  "$schema": "./node_modules/json-server/schema.json",
   "events": [
     {
-      "id": "1",
       "title": "Event 1",
       "group": "Group A",
       "date": "01-07-2024",
       "time": "10:00",
       "location": "Location A",
-      "description": "Description for Event 1"
+      "description": "Description for Event 1",
+      "id": "1"
     },
     {
-      "id": "2",
       "title": "Event 2",
       "group": "Group B",
       "date": "02-07-2024",
       "time": "14:00",
       "location": "Location B",
-      "description": "Description for Event 2"
+      "description": "Description for Event 2",
+      "id": "2"
+    },
+    {
+      "title": "test3",
+      "group": "work",
+      "date": "2026-05-23",
+      "time": "13:30",
+      "location": "EURECOM",
+      "description": "I am testing",
+      "id": "brpcNGhsdOw"
     }
-  ]
+  ],
+
+  "groups": [
+    {
+      "id": "1",
+      "name": "friends",
+      "label": "Friends"
+    },
+    {
+      "id": "2",
+      "name": "family",
+      "label": "Family"
+    },
+    {
+      "id": "3",
+      "name": "school",
+      "label": "School"
+    },
+    {
+      "id": "4",
+      "name": "sports",
+      "label": "Sports"
+    }
+  ],
+
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -1,7 +1,10 @@
 import "./CreateEventModal.css";
 import { Modal } from "../Modal/Modal";
+import { useFetch } from "../../utils/hooks/useFetch";
 
 export function CreateEventModal({ closeModal, onSubmit }) {
+  const { data: groups } = useFetch("http://localhost:3000/groups");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -38,9 +41,12 @@ export function CreateEventModal({ closeModal, onSubmit }) {
           <label htmlFor="group">Group</label>
           <select name="group" id="group">
             <option value="">Select a group</option>
-            <option value="friends">Friends</option>
-            <option value="family">Family</option>
-            <option value="work">Work</option>
+            {groups &&
+              groups.map((group) => (
+                <option key={group.id} value={group.name}>
+                  {group.label}
+                </option>
+              ))}
           </select>
         </div>
 
