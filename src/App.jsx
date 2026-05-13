@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import "./App.css";
-import { CreateEventModal } from "./componants/CreateEventModal/CreateEventModal";
-import { Modal } from "./componants/Modal/Modal";
+import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
+import { Modal } from "./components/Modal/Modal";
 
 function App() {
   const [CreateEventModalOpen, setCreateEventModalOpen] = useState(false);
