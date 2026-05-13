@@ -1,34 +1,33 @@
 {
   "events": [
     {
-      "title": "Event 1",
-      "group": "Group A",
+      "title": "Family Dinner",
+      "group": "family",
       "date": "01-07-2024",
       "time": "10:00",
       "location": "Location A",
-      "description": "Description for Event 1",
+      "description": "It's time for a family dinner! Join us for a delicious meal and great company. Whether you're a foodie or just looking to spend quality time with loved ones, this is the perfect opportunity. Don't forget to bring your appetite and your favorite dish to share. See you there!",
       "id": "1"
     },
     {
-      "title": "Event 2",
-      "group": "Group B",
+      "title": "Café Meeting",
+      "group": "friends",
       "date": "02-07-2024",
       "time": "14:00",
-      "location": "Location B",
-      "description": "Description for Event 2",
+      "location": "Cafe",
+      "description": "It's time for a café meeting! Join us for a relaxing afternoon at our favorite café. Whether you want to catch up with friends, enjoy a cup of coffee, or simply unwind, this is the perfect opportunity. Don't forget to bring your favorite book or just come to chat. See you there!",
       "id": "2"
     },
     {
-      "title": "test3",
-      "group": "work",
+      "title": "Football practice",
+      "group": "sports",
       "date": "2026-05-23",
       "time": "13:30",
       "location": "EURECOM",
-      "description": "I am testing",
+      "description": "It's football practice time! Join us for an exciting session of football at EURECOM. Whether you're a seasoned player or just looking to have fun, everyone is welcome. Don't forget to bring your sports gear and a water bottle. See you on the field!",
       "id": "brpcNGhsdOw"
     }
   ],
-
   "groups": [
     {
       "id": "1",
@@ -51,6 +50,5 @@
       "label": "Sports"
     }
   ],
-
   "$schema": "./node_modules/json-server/schema.json"
 }
