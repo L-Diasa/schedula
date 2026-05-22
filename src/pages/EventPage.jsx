@@ -3,6 +3,7 @@ import "./eventPage.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { ParticipantsModal } from "../components/ParticipantsModal/ParticipantsModal";
+import { useNavigate } from "react-router-dom";
 
 export default function EventPage() {
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
@@ -40,11 +41,17 @@ export default function EventPage() {
     { name: "Logan White", icon: profileIcon },
   ];
 
+  const navigate = useNavigate();
+
   return (
     <main className="event-page">
       <div className="event-container">
         <section className="event-main">
-          <button className="back-button">← Go back</button>
+          <button
+            className="back-button"
+            onClick={() => navigate(-1)}>
+            ← Go back
+          </button>
 
           <h1 className="event-title">Event name</h1>
 
