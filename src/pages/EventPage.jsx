@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { ParticipantsModal } from "../components/ParticipantsModal/ParticipantsModal";
 import { useNavigate } from "react-router-dom";
+import { useFetch } from "../utils/hooks/useFetch";
 
 export default function EventPage() {
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
@@ -43,6 +44,22 @@ export default function EventPage() {
 
   const navigate = useNavigate();
 
+  const {
+  data: events,
+  isPending,
+  error,
+  } = useFetch("http://localhost:3000/events");
+
+  const event = events?.[0];
+
+  if (isPending) {
+  return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <main className="event-page">
       <div className="event-container">
@@ -53,15 +70,9 @@ export default function EventPage() {
             ← Go back
           </button>
 
-          <h1 className="event-title">Event name</h1>
+          <h1 className="event-title"> {event?.title} </h1>
 
-          <p className="event-description">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s. Lorem Ipsum is simply dummy text of the
-            printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since the 1500s.
-          </p>
+          <p className="event-description"> {event?.description} </p>
 
           <div className="participants-section">
             <h2>Participants</h2>
@@ -105,9 +116,9 @@ export default function EventPage() {
             </div>
 
             <p>
-              Friday April 24 2026,
+              {event?.date}
               <br />
-              08:00-10:00
+              {event?.time}
             </p>
           </div>
 
@@ -135,11 +146,7 @@ export default function EventPage() {
             </div>
 
             <p>
-              Campus SophiaTech,
-              <br />
-              450 Route des Chappes,
-              <br />
-              06410 Biot
+              {event?.location}
             </p>
           </div>
 
