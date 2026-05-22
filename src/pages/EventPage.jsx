@@ -121,9 +121,7 @@ export default function EventPage() {
             </div>
 
             <p>
-              {event?.date}
-              <br />
-              {event?.time}
+              {event?.date}, {event?.time}
             </p>
           </div>
 

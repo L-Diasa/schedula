@@ -83,8 +83,7 @@ export function CreateEventModal({ closeModal, onSubmit }) {
           <input
             name="location"
             id="location"
-            type="text"
-            placeholder="EURECOM"
+            placeholder="Street or place, City, Country"
           />
         </div>
 

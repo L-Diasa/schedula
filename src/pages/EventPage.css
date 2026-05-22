@@ -107,8 +107,15 @@ body {
 
 .info-box {
   display: flex;
+  align-items: center;
   gap: 16px;
   margin-bottom: 28px;
+}
+
+.info-box p {
+  line-height: 1.5;
+  max-width: 200px;
+  word-break: break-word;
 }
 
 .map-container {
