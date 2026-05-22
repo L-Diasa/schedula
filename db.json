@@ -5,8 +5,10 @@
       "group": "family",
       "date": "01-07-2024",
       "time": "10:00",
-      "location": "Location A",
+      "location": "Eiffel Tower, Paris, France",
       "description": "It's time for a family dinner! Join us for a delicious meal and great company. Whether you're a foodie or just looking to spend quality time with loved ones, this is the perfect opportunity. Don't forget to bring your appetite and your favorite dish to share. See you there!",
+      "latitude": 48.8582599,
+      "longitude": 2.2945006,
       "id": "1"
     },
     {

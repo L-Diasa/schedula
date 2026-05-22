@@ -70,7 +70,7 @@ function HomePage() {
         createPortal(
           <CreateEventModal
             closeModal={closeModals}
-            onSubmit={closeModals}
+            onSubmit={handleCreateEvent}
           />,
           document.body
         )}

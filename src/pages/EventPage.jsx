@@ -52,6 +52,11 @@ export default function EventPage() {
 
   const event = events?.[0];
 
+  const position = [
+  event?.latitude,
+  event?.longitude,
+  ];
+
   if (isPending) {
   return <p>Loading...</p>;
   }
@@ -151,7 +156,8 @@ export default function EventPage() {
           </div>
 
           <MapContainer
-            center={[43.6156, 7.0718]}
+            key={position.join(",")}
+            center={position}
             zoom={15}
             scrollWheelZoom={true}
             className="map-container"
@@ -161,8 +167,8 @@ export default function EventPage() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            <Marker position={[43.6156, 7.0718]}>
-              <Popup>Campus SophiaTech</Popup>
+            <Marker position={position}>
+              <Popup>{event?.location}</Popup>
             </Marker>
           </MapContainer>
         </aside>

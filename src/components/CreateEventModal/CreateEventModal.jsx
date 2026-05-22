@@ -5,22 +5,40 @@ import { useFetch } from "../../utils/hooks/useFetch";
 export function CreateEventModal({ closeModal, onSubmit }) {
   const { data: groups } = useFetch("http://localhost:3000/groups");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData(e.target);
+  const formData = new FormData(e.target);
+  const location = formData.get("location");
 
-    const newEvent = {
-      title: formData.get("title"),
-      group: formData.get("group"),
-      date: formData.get("date"),
-      time: formData.get("time"),
-      location: formData.get("location"),
-      description: formData.get("description"),
-    };
+  const response = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+      location
+    )}`
+  );
 
-    onSubmit(newEvent);
+  const locationData = await response.json();
+
+  if (locationData.length === 0) {
+    alert("Location not found. Please enter a more specific address.");
+    return;
+  }
+
+  const newEvent = {
+    title: formData.get("title"),
+    group: formData.get("group"),
+    date: formData.get("date"),
+    time: formData.get("time"),
+    location,
+    description: formData.get("description"),
+    latitude: Number(locationData[0].lat),
+    longitude: Number(locationData[0].lon),
   };
+
+  console.log("locationData:", locationData);
+  console.log("newEvent:", newEvent);
+  onSubmit(newEvent);
+};
 
   return (
     <Modal closeModal={closeModal}>
