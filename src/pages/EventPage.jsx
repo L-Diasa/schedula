@@ -12,7 +12,8 @@ export default function EventPage() {
   const [signedUp, setSignedUp] = useState(false);
   const [extraParticipants, setExtraParticipants] = useState([]);
   const [showSignupModal, setShowSignupModal] = useState(false);
-
+  const [showLeaveModal, setShowLeaveModal] = useState(false);
+  
   const navigate = useNavigate();
 
   const {
@@ -69,6 +70,14 @@ export default function EventPage() {
     setSignedUp(true);
   };
 
+  const handleLeaveEvent = () => {
+    setExtraParticipants((prev) =>
+      prev.filter((participant) => participant.name !== "John Doe")
+    );
+
+    setSignedUp(false);
+  };
+
   const position = [event.latitude, event.longitude];
 
   return (
@@ -104,10 +113,11 @@ export default function EventPage() {
 
           <button
             className="signup-button"
-            onClick={() => setShowSignupModal(true)}
-            disabled={signedUp}
+            onClick={() =>
+              signedUp ? setShowLeaveModal(true) : setShowSignupModal(true)
+            }
           >
-            Sign up
+            {signedUp ? "Leave event" : "Sign up"}
           </button>
         </section>
 
@@ -193,6 +203,27 @@ export default function EventPage() {
               onClick={() => {
                 handleSignUp();
                 setShowSignupModal(false);
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        </Modal>
+      )}
+
+      {showLeaveModal && (
+        <Modal
+          closeModal={() => setShowLeaveModal(false)}
+          title="Confirm leave"
+        >
+          <p>Are you sure you want to leave this event?</p>
+
+          <div className="modal-footer">
+            <button
+              className="btn-submit"
+              onClick={() => {
+                handleLeaveEvent();
+                setShowLeaveModal(false);
               }}
             >
               Confirm
