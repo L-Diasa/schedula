@@ -5,9 +5,23 @@ import "leaflet/dist/leaflet.css";
 import { ParticipantsModal } from "../components/ParticipantsModal/ParticipantsModal";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../utils/hooks/useFetch";
+import { Modal } from "../components/Modal/Modal";
 
 export default function EventPage() {
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
+  const [signedUp, setSignedUp] = useState(false);
+  const [extraParticipants, setExtraParticipants] = useState([]);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+
+  const navigate = useNavigate();
+
+  const {
+    data: events,
+    isPending,
+    error,
+  } = useFetch("http://localhost:3000/events");
+
+  const event = events?.[0];
 
   const profileIcon = (
     <svg
@@ -26,54 +40,54 @@ export default function EventPage() {
     </svg>
   );
 
-  const navigate = useNavigate();
-
-  const {
-  data: events,
-  isPending,
-  error,
-  } = useFetch("http://localhost:3000/events");
-
-  const event = events?.[0];
-
-  const participants =
-  event?.participants?.map((participant) => ({
-    ...participant,
-    icon: profileIcon,
-  })) || [];
-
-  const position = [
-  event?.latitude,
-  event?.longitude,
-  ];
-
   if (isPending) {
-  return <p>Loading...</p>;
+    return <p>Loading...</p>;
   }
 
   if (error) {
     return <p>{error}</p>;
   }
 
+  const registeredParticipants =
+    event?.participants?.map((participant) => ({
+      ...participant,
+      icon: profileIcon,
+    })) || [];
+
+  const allParticipants = [
+    ...registeredParticipants,
+    ...extraParticipants,
+  ];
+
+  const handleSignUp = () => {
+    const newParticipant = {
+      name: "John Doe",
+      icon: profileIcon,
+    };
+
+    setExtraParticipants((prev) => [...prev, newParticipant]);
+    setSignedUp(true);
+  };
+
+  const position = [event.latitude, event.longitude];
+
   return (
     <main className="event-page">
       <div className="event-container">
         <section className="event-main">
-          <button
-            className="back-button"
-            onClick={() => navigate(-1)}>
+          <button className="back-button" onClick={() => navigate(-1)}>
             ← Go back
           </button>
 
-          <h1 className="event-title"> {event?.title} </h1>
+          <h1 className="event-title">{event.title}</h1>
 
-          <p className="event-description"> {event?.description} </p>
+          <p className="event-description">{event.description}</p>
 
           <div className="participants-section">
             <h2>Participants</h2>
 
             <div className="participants-row">
-              {participants.slice(0, 7).map((participant, index) => (
+              {allParticipants.slice(0, 7).map((participant, index) => (
                 <div className="icon-card" key={index}>
                   {participant.icon}
                 </div>
@@ -88,7 +102,13 @@ export default function EventPage() {
             </button>
           </div>
 
-          <button className="signup-button">Sign up</button>
+          <button
+            className="signup-button"
+            onClick={() => setShowSignupModal(true)}
+            disabled={signedUp}
+          >
+            Sign up
+          </button>
         </section>
 
         <aside className="event-sidebar">
@@ -111,7 +131,7 @@ export default function EventPage() {
             </div>
 
             <p>
-              {event?.date}, {event?.time}
+              {event.date}, {event.time}
             </p>
           </div>
 
@@ -138,9 +158,7 @@ export default function EventPage() {
               </svg>
             </div>
 
-            <p>
-              {event?.location}
-            </p>
+            <p>{event.location}</p>
           </div>
 
           <MapContainer
@@ -156,15 +174,36 @@ export default function EventPage() {
             />
 
             <Marker position={position}>
-              <Popup>{event?.location}</Popup>
+              <Popup>{event.location}</Popup>
             </Marker>
           </MapContainer>
         </aside>
       </div>
 
+      {showSignupModal && (
+        <Modal
+          closeModal={() => setShowSignupModal(false)}
+          title="Confirm signup"
+        >
+          <p>Are you sure you want to sign up for this event?</p>
+
+          <div className="modal-footer">
+            <button
+              className="btn-submit"
+              onClick={() => {
+                handleSignUp();
+                setShowSignupModal(false);
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        </Modal>
+      )}
+
       {showParticipantsModal && (
         <ParticipantsModal
-          participants={participants}
+          participants={allParticipants}
           closeModal={() => setShowParticipantsModal(false)}
         />
       )}

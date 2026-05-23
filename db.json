@@ -10,7 +10,6 @@
         "latitude": 48.8582599,
         "longitude": 2.2945006,
         "participants": [
-          { "name": "John Doe" },
           { "name": "Emma Smith" },
           { "name": "Lucas Johnson" },
           { "name": "Olivia Brown" },

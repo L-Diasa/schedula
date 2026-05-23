@@ -100,6 +100,12 @@ body {
   font-size: 16px;
 }
 
+.signup-button:disabled {
+  background: #999;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .event-sidebar {
   width: 340px;
   margin-top: 120px;
