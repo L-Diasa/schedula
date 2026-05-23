@@ -33,6 +33,7 @@ export function CreateEventModal({ closeModal, onSubmit }) {
     description: formData.get("description"),
     latitude: Number(locationData[0].lat),
     longitude: Number(locationData[0].lon),
+    participants: [],
   };
 
   console.log("locationData:", locationData);

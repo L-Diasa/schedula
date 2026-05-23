@@ -26,22 +26,6 @@ export default function EventPage() {
     </svg>
   );
 
-  const participants = [
-    { name: "John Doe", icon: profileIcon },
-    { name: "Emma Smith", icon: profileIcon },
-    { name: "Lucas Johnson", icon: profileIcon },
-    { name: "Sophia Williams", icon: profileIcon },
-    { name: "Liam Brown", icon: profileIcon },
-    { name: "Olivia Davis", icon: profileIcon },
-    { name: "Ava Miller", icon: profileIcon },
-    { name: "Isabella Moore", icon: profileIcon },
-    { name: "Mason Taylor", icon: profileIcon },
-    { name: "Mia Anderson", icon: profileIcon },
-    { name: "Ethan Thomas", icon: profileIcon },
-    { name: "Amelia Jackson", icon: profileIcon },
-    { name: "Logan White", icon: profileIcon },
-  ];
-
   const navigate = useNavigate();
 
   const {
@@ -51,6 +35,12 @@ export default function EventPage() {
   } = useFetch("http://localhost:3000/events");
 
   const event = events?.[0];
+
+  const participants =
+  event?.participants?.map((participant) => ({
+    ...participant,
+    icon: profileIcon,
+  })) || [];
 
   const position = [
   event?.latitude,
