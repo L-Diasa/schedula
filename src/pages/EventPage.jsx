@@ -42,8 +42,8 @@ export default function EventPage() {
   );
 
   if (isPending) {
-    return <p>Loading...</p>;
-  }
+  return <p className="loading">Loading...</p>;
+}
 
   if (error) {
     return <p>{error}</p>;
@@ -112,7 +112,7 @@ export default function EventPage() {
           </div>
 
           <button
-            className="signup-button"
+            className="btn signup-button"
             onClick={() =>
               signedUp ? setShowLeaveModal(true) : setShowSignupModal(true)
             }
