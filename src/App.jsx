@@ -7,22 +7,15 @@ import {
 } from "react-router-dom";
 
 import "./App.css";
-import { CreateEventModal } from "./Components/CreateEventModal/CreateEventModal";
-import { Modal } from "./Components/Modal/Modal";
+import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
+import { Modal } from "./components/Modal/Modal";
 import { createEvent } from "./api/events";
-import { useFetch } from "./utils/hooks/useFetch";
 import EventPage from "./pages/EventPage";
 
 function HomePage() {
   const navigate = useNavigate();
   const [createEventModalOpen, setCreateEventModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-
-    const {
-    data: events,
-    isPending,
-    error,
-  } = useFetch("http://localhost:3000/events");
 
   const closeModals = () => {
     setCreateEventModalOpen(false);
@@ -40,8 +33,6 @@ function HomePage() {
       console.error(err);
     }
   };
-
-  const firstEvent = events?.[0];
 
   return (
     <div className="App">
