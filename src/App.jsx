@@ -1,22 +1,30 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { 
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
+
 import "./App.css";
-import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
-import { Modal } from "./components/Modal/Modal";
+import { CreateEventModal } from "./Components/CreateEventModal/CreateEventModal";
+import { Modal } from "./Components/Modal/Modal";
 import { createEvent } from "./api/events";
 import { useFetch } from "./utils/hooks/useFetch";
+import EventPage from "./pages/EventPage";
 
-function App() {
-  const [CreateEventModalOpen, setCreateEventModalOpen] = useState(false);
-  const [ModalOpen, setModalOpen] = useState(false);
+function HomePage() {
+  const navigate = useNavigate();
+  const [createEventModalOpen, setCreateEventModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const {
+    const {
     data: events,
     isPending,
     error,
   } = useFetch("http://localhost:3000/events");
 
-  const handleButtonClick = () => {
+  const closeModals = () => {
     setCreateEventModalOpen(false);
     setModalOpen(false);
   };
@@ -36,70 +44,54 @@ function App() {
   const firstEvent = events?.[0];
 
   return (
-    <>
-      <div className="App">
-        <button className="btn btn-open" onClick={() => setCreateEventModalOpen(true)}>
-          Open Create Event Modal
-        </button>
-        {CreateEventModalOpen &&
-          createPortal(
-            <CreateEventModal
-              closeModal={() => setCreateEventModalOpen(false)}
-              onSubmit={handleCreateEvent}
-            />,
-            document.body,
-          )}
-        <button className="btn btn-open" onClick={() => setModalOpen(true)}>
-          Open Simple Modal
-        </button>
-        {ModalOpen &&
-          createPortal(
-            <Modal closeModal={handleButtonClick} title={"Simple Modal"}>
-              <p>This is the content of the modal.</p>
-            </Modal>,
-            document.body,
-          )}
-      </div>
-      <section className="events-section">
-        <h2>First Event</h2>
+    <div className="App">
+      <button
+        className="btn btn-open"
+        onClick={() => setCreateEventModalOpen(true)}
+      >
+        Open Create Event Modal
+      </button>
 
-        {isPending && <p>Loading...</p>}
+      <button
+        className="btn btn-open"
+        onClick={() => setModalOpen(true)}
+      >
+        Open Simple Modal
+      </button>
 
-        {error && <p>{error}</p>}
+      <button
+        className="btn btn-open"
+        onClick={() => navigate("/event")}
+      >
+        Go to Event Page
+      </button>
 
-        {firstEvent && (
-          <div className="event-card">
-            <p>
-              <strong>Title:</strong> {firstEvent.title}
-            </p>
-
-            <p>
-              <strong>Group:</strong> {firstEvent.group}
-            </p>
-
-            <p>
-              <strong>Date:</strong> {firstEvent.date}
-            </p>
-
-            <p>
-              <strong>Time:</strong> {firstEvent.time}
-            </p>
-
-            <p>
-              <strong>Location:</strong> {firstEvent.location}
-            </p>
-
-            <p>
-              <strong>Description:</strong> {firstEvent.description}
-            </p>
-
-            <p>
-              <strong>ID:</strong> {firstEvent.id}
-            </p>
-          </div>
+      {createEventModalOpen &&
+        createPortal(
+          <CreateEventModal
+            closeModal={closeModals}
+            onSubmit={handleCreateEvent}
+          />,
+          document.body
         )}
-      </section>
-    </>
+
+      {modalOpen &&
+        createPortal(
+          <Modal closeModal={closeModals} title="Simple Modal">
+            <p>This is the content of the modal.</p>
+          </Modal>,
+          document.body
+        )}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/event" element={<EventPage />} />
+    </Routes>
   );
 }
 

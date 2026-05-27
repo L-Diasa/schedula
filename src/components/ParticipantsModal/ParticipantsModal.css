@@ -1,0 +1,26 @@
+.participants-modal {
+  max-width: 400px;
+}
+
+.participants-modal .modal-title {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.participants-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  width: fit-content;
+  max-height: 420px;
+  margin: 0 auto;
+
+  overflow-y: auto;
+}
+
+.participant-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
