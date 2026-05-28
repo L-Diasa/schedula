@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./EventPage.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { ParticipantsModal } from "../components/ParticipantsModal/ParticipantsModal";
+import { ParticipantsModal } from "../../components/ParticipantsModal/ParticipantsModal";
 import { useNavigate } from "react-router-dom";
-import { useFetch } from "../utils/hooks/useFetch";
-import { Modal } from "../components/Modal/Modal";
+import { useFetch } from "../../utils/hooks/useFetch";
+import { Modal } from "../../components/Modal/Modal";
 
 export default function EventPage() {
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
