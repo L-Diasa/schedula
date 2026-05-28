@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { 
   Navigate,
@@ -9,7 +9,7 @@ import {
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import HomePage from "./pages/HomePage/HomePage";
-import data from "./db.json";
+import data from "./../db.json"
 import "./App.css";
 
 import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
