@@ -9,6 +9,7 @@ import {
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import HomePage from "./pages/HomePage/HomePage";
+import data from "./db.json";
 import "./App.css";
 
 import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
@@ -37,6 +38,24 @@ function HomePage2() {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    const existingUsers = localStorage.getItem("users");
+    const existingEvents = localStorage.getItem("events");
+    const existingGroups = localStorage.getItem("groups");
+
+    if (!existingUsers) {
+      localStorage.setItem("users", JSON.stringify(data.users));
+    }
+
+    if (!existingEvents) {
+      localStorage.setItem("events", JSON.stringify(data.events));
+    }
+
+    if (!existingGroups) {
+      localStorage.setItem("groups", JSON.stringify(data.groups));
+    }
+  }, []);
 
   return (
     <div className="App">
