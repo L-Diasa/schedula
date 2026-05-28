@@ -1,6 +1,6 @@
 import "./CreateEventModal.css";
 import { Modal } from "../Modal/Modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function CreateEventModal({ closeModal, onSubmit }) {
   const [groups, setGroups] = useState(() => { return JSON.parse(localStorage.getItem("groups")) || []; });
