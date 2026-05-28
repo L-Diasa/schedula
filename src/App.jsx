@@ -14,7 +14,6 @@ import "./App.css";
 
 import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
 import { Modal } from "./components/Modal/Modal";
-import { createEvent } from "./api/events";
 import EventPage from "./pages/EventPage/EventPage";
 
 function HomePage2() {
@@ -27,16 +26,17 @@ function HomePage2() {
     setModalOpen(false);
   };
 
-  const handleCreateEvent = async (newEvent) => {
-    try {
-      const savedEvent = await createEvent(newEvent);
+  const handleCreateEvent = (newEvent) => {
+    const existingEvents =
+      JSON.parse(localStorage.getItem("events")) || [];
 
-      console.log(savedEvent);
+    const updatedEvents = [...existingEvents, newEvent];
 
-      setCreateEventModalOpen(false);
-    } catch (err) {
-      console.error(err);
-    }
+    localStorage.setItem("events", JSON.stringify(updatedEvents));
+
+    console.log("Saved to localStorage:", newEvent);
+
+    setCreateEventModalOpen(false);
   };
 
   useEffect(() => {
