@@ -1,9 +1,9 @@
 import "./CreateEventModal.css";
 import { Modal } from "../Modal/Modal";
-import { useFetch } from "../../utils/hooks/useFetch";
+import { useState } from "react";
 
 export function CreateEventModal({ closeModal, onSubmit }) {
-  const { data: groups } = useFetch("http://localhost:3000/groups");
+  const [groups, setGroups] = useState(() => { return JSON.parse(localStorage.getItem("groups")) || []; });
 
   const handleSubmit = async (e) => {
   e.preventDefault();
