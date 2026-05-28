@@ -1,11 +1,11 @@
 import { useState } from "react";
-import "./eventPage.css";
+import "./EventPage.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { ParticipantsModal } from "../components/ParticipantsModal/ParticipantsModal";
+import { ParticipantsModal } from "../../components/ParticipantsModal/ParticipantsModal";
 import { useNavigate } from "react-router-dom";
-import { useFetch } from "../utils/hooks/useFetch";
-import { Modal } from "../components/Modal/Modal";
+import { useFetch } from "../../utils/hooks/useFetch";
+import { Modal } from "../../components/Modal/Modal";
 
 export default function EventPage() {
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
@@ -17,12 +17,10 @@ export default function EventPage() {
   const navigate = useNavigate();
 
   const {
-    data: events,
+    data,
     isPending,
     error,
-  } = useFetch("http://localhost:3000/events");
-
-  const event = events?.[0];
+  } = useFetch(window.location.origin + '/db.json');
 
   const profileIcon = (
     <svg
@@ -42,12 +40,15 @@ export default function EventPage() {
   );
 
   if (isPending) {
-  return <p className="loading">Loading...</p>;
-}
+    return <p className="loading">Loading...</p>;
+  }
 
   if (error) {
     return <p>{error}</p>;
   }
+
+  const events = data?.events;
+  const event = events?.[0];
 
   const registeredParticipants =
     event?.participants?.map((participant) => ({

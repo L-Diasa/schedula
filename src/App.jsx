@@ -1,28 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { 
+  Navigate,
   Routes,
   Route,
   useNavigate,
 } from "react-router-dom";
-
+import LoginPage from "./pages/LoginPage/LoginPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import HomePage from "./pages/HomePage/HomePage";
+import data from "./../db.json"
 import "./App.css";
-import { CreateEventModal } from "./Components/CreateEventModal/CreateEventModal";
-import { Modal } from "./Components/Modal/Modal";
-import { createEvent } from "./api/events";
-import { useFetch } from "./utils/hooks/useFetch";
-import EventPage from "./pages/EventPage";
 
-function HomePage() {
+import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
+import { Modal } from "./components/Modal/Modal";
+import { createEvent } from "./api/events";
+import EventPage from "./pages/EventPage/EventPage";
+
+function HomePage2() {
   const navigate = useNavigate();
   const [createEventModalOpen, setCreateEventModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-
-    const {
-    data: events,
-    isPending,
-    error,
-  } = useFetch("http://localhost:3000/events");
 
   const closeModals = () => {
     setCreateEventModalOpen(false);
@@ -41,7 +39,23 @@ function HomePage() {
     }
   };
 
-  const firstEvent = events?.[0];
+  useEffect(() => {
+    const existingUsers = localStorage.getItem("users");
+    const existingEvents = localStorage.getItem("events");
+    const existingGroups = localStorage.getItem("groups");
+
+    if (!existingUsers) {
+      localStorage.setItem("users", JSON.stringify(data.users));
+    }
+
+    if (!existingEvents) {
+      localStorage.setItem("events", JSON.stringify(data.events));
+    }
+
+    if (!existingGroups) {
+      localStorage.setItem("groups", JSON.stringify(data.groups));
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -89,8 +103,12 @@ function HomePage() {
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/home" element={<HomePage/>} />
+      <Route path="/home2" element={<HomePage2 />} />
       <Route path="/event" element={<EventPage />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }
