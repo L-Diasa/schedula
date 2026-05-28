@@ -1,0 +1,10 @@
+{
+  "users": [],
+  "events": [],
+  "groups": [
+    { "id": "1", "name": "friends", "label": "Friends" },
+    { "id": "2", "name": "family", "label": "Family" },
+    { "id": "3", "name": "school", "label": "School" },
+    { "id": "4", "name": "sports", "label": "Sports" }
+  ]
+}
