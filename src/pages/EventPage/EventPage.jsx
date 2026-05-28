@@ -1,11 +1,10 @@
-import { useState } from "react";
 import "./EventPage.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { ParticipantsModal } from "../../components/ParticipantsModal/ParticipantsModal";
 import { useNavigate } from "react-router-dom";
-import { useFetch } from "../../utils/hooks/useFetch";
 import { Modal } from "../../components/Modal/Modal";
+import { useEffect, useState } from "react";
 
 export default function EventPage() {
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
@@ -15,12 +14,6 @@ export default function EventPage() {
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   
   const navigate = useNavigate();
-
-  const {
-    data,
-    isPending,
-    error,
-  } = useFetch(window.location.origin + '/db.json');
 
   const profileIcon = (
     <svg
@@ -39,16 +32,18 @@ export default function EventPage() {
     </svg>
   );
 
-  if (isPending) {
-    return <p className="loading">Loading...</p>;
-  }
+  const [events, setEvents] = useState([]);
 
-  if (error) {
-    return <p>{error}</p>;
-  }
+  useEffect(() => {
+    const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
+    setEvents(storedEvents);
+  }, []);
 
-  const events = data?.events;
   const event = events?.[0];
+
+  if (!event) {
+    return <p className="loading">No event found.</p>;
+  }
 
   const registeredParticipants =
     event?.participants?.map((participant) => ({
