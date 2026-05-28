@@ -3,14 +3,7 @@ import { Modal } from "../Modal/Modal";
 import { useEffect, useState } from "react";
 
 export function CreateEventModal({ closeModal, onSubmit }) {
-  const [groups, setGroups] = useState([]);
-
-  useEffect(() => {
-    const storedGroups =
-      JSON.parse(localStorage.getItem("groups")) || [];
-
-    setGroups(storedGroups);
-  }, []);
+  const [groups, setGroups] = useState(() => { return JSON.parse(localStorage.getItem("groups")) || []; });
 
   const handleSubmit = async (e) => {
   e.preventDefault();

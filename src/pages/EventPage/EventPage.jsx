@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { ParticipantsModal } from "../../components/ParticipantsModal/ParticipantsModal";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function EventPage() {
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
@@ -32,12 +32,7 @@ export default function EventPage() {
     </svg>
   );
 
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
-    setEvents(storedEvents);
-  }, []);
+  const [events, setEvents] = useState(() => { return JSON.parse(localStorage.getItem("events")) || []; });
 
   const event = events?.[0];
 
