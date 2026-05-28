@@ -11,13 +11,12 @@ export default function RegisterPage() {
     confirmPassword: "",
   });
   const [error, setError] = useState(null);
-  const [isPending, setIsPending] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError(null);
 
@@ -26,37 +25,21 @@ export default function RegisterPage() {
       return;
     }
 
-    setIsPending(true);
+    // Fall back to empty array if no users have registered yet
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    try {
-      const checkRes = await fetch(
-        `http://localhost:3000/users?email=${formData.email}`
-      );
-      const existing = await checkRes.json();
-
-      if (existing.length > 0) {
-        setError("An account with this email already exists.");
-        setIsPending(false);
-        return;
-      }
-
-      const res = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      const newUser = await res.json();
-      localStorage.setItem("currentUser", JSON.stringify(newUser));
-      navigate("/home");
-    } catch {
-      setError("Could not connect to server.");
-      setIsPending(false);
+    // Check if this email is already registered
+    const existing = users.find((u) => u.email === formData.email);
+    if (existing) {
+      setError("An account with this email already exists.");
+      return;
     }
+
+    // Save the new user and log them in
+    const newUser = { name: formData.name, email: formData.email, password: formData.password };
+    localStorage.setItem("users", JSON.stringify([...users, newUser]));
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
+    navigate("/home");
   };
 
   return (
@@ -120,8 +103,8 @@ export default function RegisterPage() {
 
           {error && <p className="auth-error">{error}</p>}
 
-          <button type="submit" className="auth-btn" disabled={isPending}>
-            {isPending ? "Creating account..." : "Sign up"}
+          <button type="submit" className="auth-btn">
+            Sign up
           </button>
         </form>
 

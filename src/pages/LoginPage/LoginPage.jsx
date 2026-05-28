@@ -6,7 +6,6 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
-  const [isPending, setIsPending] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -15,27 +14,18 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setIsPending(true);
 
-    try {
-      const res = await fetch(
-        `http://localhost:3000/users?email=${formData.email}`
-      );
-      const users = await res.json();
-      const user = users.find((u) => u.password === formData.password);
-
-      if (!user) {
-        setError("Invalid email or password.");
-        setIsPending(false);
-        return;
-      }
-
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      navigate("/home");
-    } catch {
-      setError("Could not connect to server.");
-      setIsPending(false);
+    /*1. Read the users list from localStorage:*/
+    const users = JSON.parse(localStorage.getItem("users"));
+    /*2. Find the user whose email AND password match the form:*/
+    const user = users.find(u => u.email === formData.email && u.password === formData.password);
+    /*3. If no match, show error. If match, save as currentUser and navigate:*/
+    if (!user) {
+      setError("Invalid email or password.");
+      return;
     }
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    navigate("/home");
   };
 
   return (
@@ -73,8 +63,8 @@ export default function LoginPage() {
 
           {error && <p className="auth-error">{error}</p>}
 
-          <button type="submit" className="auth-btn" disabled={isPending}>
-            {isPending ? "Signing in..." : "Sign in"}
+          <button type="submit" className="auth-btn">
+            Sign in
           </button>
         </form>
 

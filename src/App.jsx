@@ -101,6 +101,18 @@ function HomePage2() {
 }
 
 function App() {
+  useEffect(() => {
+    if (!localStorage.getItem("users")) {
+      localStorage.setItem("users", JSON.stringify(data.users));
+    }
+    if (!localStorage.getItem("events")) {
+      localStorage.setItem("events", JSON.stringify(data.events));
+    }
+    if (!localStorage.getItem("groups")) {
+      localStorage.setItem("groups", JSON.stringify(data.groups));
+    }
+  }, []);
+
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
