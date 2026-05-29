@@ -1,10 +1,12 @@
 function Navbar() {
   return (
     <nav>
-      <span>Schedula</span>
-      <a href="#">Home</a>
-      <a href="#">Events</a>
-      <span>👤</span>
+    <a href="/">Schedula</a>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Events</a></li>
+      </ul>
+      <span aria-label="User profile">👤</span>
     </nav>
   );
 }
