@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { 
+import {
   Navigate,
   Routes,
   Route,
   useNavigate,
+  useLocation,
 } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
@@ -12,6 +13,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import data from "./../db.json"
 import "./App.css";
 
+import Navbar from "./components/Navbar/Navbar";
 import { CreateEventModal } from "./components/CreateEventModal/CreateEventModal";
 import { Modal } from "./components/Modal/Modal";
 import EventPage from "./pages/EventPage/EventPage";
@@ -101,8 +103,13 @@ function HomePage2() {
 }
 
 function App() {
+  const location = useLocation();
+  const hideNavbar = ["/login", "/register"].includes(location.pathname);
+
   return (
-    <Routes>
+    <>
+      {!hideNavbar && <Navbar />}
+      <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/home" element={<HomePage/>} />
@@ -110,6 +117,7 @@ function App() {
       <Route path="/event" element={<EventPage />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
+    </>
   );
 }
 
